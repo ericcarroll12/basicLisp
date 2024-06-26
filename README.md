@@ -12,7 +12,7 @@ Welcome to BasicLisp! This is a compiler for the Lisp programming language, desi
 
 ## Introduction
 
-NOTE: This project was an attempt to learn about compilers and has a hand-written tokenizer, recurrisve descent parser, and code generator all written in c++. This project is ongoing and several features are still missing. If you have questions, feel free to contact me at ericcarroll120@gmail.com
+NOTE: This project is an attempt to learn about compilers and has a hand-written tokenizer, recurrisve descent parser, and code generator all written in c++. This project is ongoing and several features are still missing. If you have questions or suggestions, feel free to contact me at ericcarroll120@gmail.com
 
 ## Features
 
