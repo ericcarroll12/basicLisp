@@ -9,10 +9,6 @@ Welcome to BasicLisp! This is a compiler for the Lisp programming language, desi
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
 
 ## Introduction
 
