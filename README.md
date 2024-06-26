@@ -47,7 +47,7 @@ To install and set up the Lisp Compiler on your local machine, follow these step
 After building the project, you can use the compiler to compile Lisp files:
 
 ```sh
-./lisp-compiler path/to/yourfile.lisp
+./basicLisp path/to/yourfile.lisp
 ```
 
 Or:
