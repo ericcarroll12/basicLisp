@@ -32,7 +32,7 @@ To install and set up the Lisp Compiler on your local machine, follow these step
     ```
 
 2. **Install dependencies**
-    Ensure you have the necessary dependencies installed. This project may require tools like `make`, `gcc`, or specific libraries. For example:
+    The only dependencies are `make` and `gcc`. the rest is hand-written
     ```sh
     sudo apt-get install make gcc
     ```
