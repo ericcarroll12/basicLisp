@@ -45,6 +45,9 @@ class ASTNode {
     } 
     return out;
   }
+  int getChildrenSize(){
+    return children.size();
+  }
   void add(ASTNode *child) {
     children.push_back(child);
   }

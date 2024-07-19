@@ -283,15 +283,16 @@ void interpret(ASTNode *root,double &result) {
       if (root->left()==NULL || root->right()==NULL) {
         cerr << "Adding with out two operands" << endl;
         return;
-      } else {
-        double a,b;
-        interpret(root->left(),a);
-        interpret(root->right(),b);
-        if(root->getToken().getValue()=="+"){
-          result=a+b;
-        }else if(root->getToken().getValue()=="or") {
-          if (a!=0.0 || b!=0.0) result=1.0;
-          else result=0.0;
+      } else{
+        for (int i=0; i<root->getChildrenSize(); i++){
+          double a=0;
+          interpret(root->child(i),a);
+          if(root->getToken().getValue()=="+"){          
+            result=result+a;
+          }else if(root->getToken().getValue()=="or") {
+            if (a!=0.0 ) result=1.0;
+            else result=0.0;
+          }          
         }
       }
       break;
@@ -312,19 +313,45 @@ void interpret(ASTNode *root,double &result) {
   }
 }
 
+void interpreter(){
+  string in;
+  bool running=true;
+  cout << "Welcome to the live interpreter" << endl;
+  cout << "type \"exit\" to leave" << endl; 
+  while (running){  
+    cin >> in;
+    if (in=="exit") running=false;    
+    else {
+      Tokens tokens(in);
+      ASTNode *root = new ASTNode();
+      bool b=expression(tokens,root);
+      if (b){
+        double x=0;
+        interpret(root,x);
+        cout << x << endl;
+      }else{
+        cout << "could not interpret" << endl;
+      }
+    }
+  }
+}
+
 int main(int argc,char **argv) {
   /*
     driver code
   */
-    if (argc<3) {
-    cout << "Usage: pascal.exe <input.pas> <output.pas>"<<endl;
+    if (argc ==1) {
+      interpreter();
+    }
+    else if (argc==2) {
+    cout << "Usage: lisp.exe <input.lisp> <output.lisp>"<<endl;
     cout << "<input.pas> is a text file that is the pascal source code." <<endl;
     cout << "<output.s> is the name of the assembly code source"<<endl;
-  } else {
+  } else if (argc==3){
     Tokens tokens(argv[1],argv[2]);
     ASTNode *root=new ASTNode();
     cout << "Before Parsing " << endl;
-    bool b=program(tokens,root);
+    bool b=expression(tokens,root);
     if (b) {
       cout << "Success Your Code parses"<<endl;
       cout << root << endl;
@@ -339,6 +366,7 @@ int main(int argc,char **argv) {
       out.close();
     }
     else cout << "Error" << endl;
+    
   }
   //testAST();
 }

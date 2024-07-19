@@ -7,25 +7,13 @@
   main:
   	endbr64
   	push	%rbp
-    mov $3,%rax
-    push %rax
-    mov $2,%rax
-    push %rax
-    pop %rax
-    pop %rbx
-    sub %rbx,%rax
+    mov $8,%rax
     push %rax
     mov $4,%rax
-    push %rax
-    mov $2,%rax
     push %rax
     pop %rax
     pop %rbx
     add %rbx,%rax
-    push %rax
-    pop %rax
-    pop %rbx
-    mul %rbx
     push %rax
     pop  %rax
     mov	%rax, %rsi

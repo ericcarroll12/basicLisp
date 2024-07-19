@@ -13,15 +13,13 @@ using namespace std;
 // ++ operator
 class Tokens:public Tokenizer{
   /**Class for an object of tokens. Has properties of a tokenizer.
-   * This object takes a line,
+   * This object takes a line, and moves through it using getNext() to consume the next item in the line and return its token.
    * 
    */
   string line;
   ofstream fout;
   ifstream fin;
   void advance() {
-    //cout << "Advance current line <" << line <<">"<< endl;
-    // if (done()) cout << "Done" << endl;
     while ((line.length()==0 || Tokenizer::peekNext(line).getType()==EOL) && !done() ) {
       linenumber++;
       getline(fin,line);
@@ -39,10 +37,16 @@ class Tokens:public Tokenizer{
     fout.open(oFilename);
     advance();
   }
+  Tokens(string &newLine){
+    line=newLine;
+  }
   Token getNext(){ 
     advance();
     Token t=Tokenizer::getNext(line);
-    if (t.getType()==EOL && done()) return Token(DONE);   
+    if (t.getType()==EOL && done()) {
+      cout << "DONE" << endl;
+      return Token(DONE);
+      }   
     return t;
   }
   Token peekNext() {
