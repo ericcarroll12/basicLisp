@@ -57,6 +57,8 @@ class Tokenizer {
     regex idexp(identReg);
     smatch sm;
     Token t;
+
+    
     bool changed=true;
     while (changed) {
       changed=false;
@@ -70,8 +72,8 @@ class Tokenizer {
         line=line.substr(1);
         changed=true;
       }
+      if (line.length()==0) return Token(EOL);
     }
-    if (line.length()==0 || (line.length()==1 && line[0]==' ')) return Token(EOL);
     string f1=line.substr(0,1);
     string f2=line.substr(0,2);
     string f3=line.substr(0,3);
@@ -87,8 +89,10 @@ class Tokenizer {
     else if (f1=="<" || f1==">" || f1=="=") t=Token(RELATIONAL,f1);
     else if (f1=="(") t=Token(OPENPAREN,f1);
     else if (f1==")") t=Token(CLOSEPAREN,f1);
+    else t=Token(ERROR,f1);
    // else if (f1.length()==0) t=Token(EOL);
     line=line.substr(t.getValue().length());
+
     return t;
   }
 };

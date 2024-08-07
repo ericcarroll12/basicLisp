@@ -1,8 +1,8 @@
 PROJ=lisp
 EXE=bin/${PROJ}.exe
-SRC=${PROJ}.cpp
+SRC=src/${PROJ}.cpp
 TEST=tests/test.cpp
-HEADERS=AST.hpp IDEerror.hpp parser.hpp testcases.hpp token.hpp tokens.hpp
+HEADERS=src/AST.hpp src/IDEerror.hpp src/parser.hpp src/testcases.hpp src/token.hpp src/tokens.hpp
 ${EXE}:${SRC} ${HEADERS}
 	g++ -g ${SRC} -o $@
 	
@@ -13,8 +13,8 @@ interpreter:${EXE}
 	./${EXE}
 
 test:${TEST}
-	g++ ${TEST} -lgtest_main -lgtest -o tests/test
-	./tests/test
+	g++ ${TEST} -lgtest_main -lgtest -o bin/test
+	./bin/test
 
 debug:${EXE}
 	gdb --args ${EXE} input.l sort.s

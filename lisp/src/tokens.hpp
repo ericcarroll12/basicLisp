@@ -26,8 +26,7 @@ class Tokens:public Tokenizer{
     }
   }
   public:
-  string getLine() { return line; }
-  bool done() {return fin.eof(); }
+  //constructors
   Tokens(string iFilename,string oFilename) {
     linenumber=0;
     success=true;
@@ -37,9 +36,12 @@ class Tokens:public Tokenizer{
     fout.open(oFilename);
     advance();
   }
-  Tokens(string &newLine){
-    line=newLine;
-  }
+
+  //functions
+  string getLine() { return line; }
+
+  bool done() {return fin.eof(); }
+
   Token getNext(){ 
     advance();
     Token t=Tokenizer::getNext(line);
@@ -49,6 +51,7 @@ class Tokens:public Tokenizer{
       }   
     return t;
   }
+
   Token peekNext() {
     string tempLine=line;
     int tempLinenumber=linenumber;
@@ -61,8 +64,10 @@ class Tokens:public Tokenizer{
     fin.seekg(filePos,ios_base::beg);
     return tempToken;
   }
+
   ~Tokens() {
      fin.close();
      fout.close();
   }
+
 };

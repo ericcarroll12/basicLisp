@@ -322,7 +322,7 @@ void interpreter(){
     cin >> in;
     if (in=="exit") running=false;    
     else {
-      Tokens tokens(in);
+      Tokens tokens("","");
       ASTNode *root = new ASTNode();
       bool b=expression(tokens,root);
       if (b){
@@ -349,6 +349,7 @@ int main(int argc,char **argv) {
     cout << "<output.s> is the name of the assembly code source"<<endl;
   } else if (argc==3){
     Tokens tokens(argv[1],argv[2]);
+    cout << "Line = " << tokens.getLine() << endl;
     ASTNode *root=new ASTNode();
     cout << "Before Parsing " << endl;
     bool b=expression(tokens,root);
