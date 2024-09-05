@@ -3,6 +3,7 @@
 #include "../src/token.hpp"
 #include "../src/AST.hpp"
 #include "../src/tokens.hpp"
+#include "../src/parser.hpp"
 
 // Demonstrate some basic assertions.
 TEST(HelloTest, BasicAssertions) {
@@ -106,12 +107,21 @@ TEST(Tokenizer, removeWhiteSpace){
 
 
 TEST(Tokens, constructorTest1){
-  Tokens tokens("tests/testTokens.l","tests/testTokens.out");
+
+  ifstream in("tests/inputs/4.lisp");
+  ASSERT_TRUE(in.is_open());
+  
+  Tokens tokens("tests/inputs/4.lisp","tests/outputs/testoutput1.s");
   ASSERT_EQ(tokens.getLine(),"line 1");
 }
 
 TEST(Tokens, getNextTest){
-  Tokens tokens("tests/testTokens.l", "tests/testToknes.out");
+  string inpath = "tests/inputs/4.lisp";
+  ifstream testIn(inpath);
+  ASSERT_TRUE(testIn.is_open());
+  Tokens tokens(inpath, "tests/outputs/testToknes.out");
+  ASSERT_TRUE(tokens.isOpen());
+  
   ASSERT_EQ(tokens.getNext().getType(), SYMBOL);
   ASSERT_EQ(tokens.getLine(), " 1");
   ASSERT_EQ(tokens.getNext().getType(), INTEGER);
@@ -123,4 +133,33 @@ TEST(Tokens, getNextTest){
   ASSERT_EQ(tokens.getNext().getType(), DONE);
 }
 
+TEST(Tokens, getLineTest){
+  string expected = "line 1";
+  string inpath ="tests/inputs/4.lisp";
+  ifstream in(inpath);
+  ASSERT_TRUE(in.is_open());
+  Tokens tokens(inpath, "tests/testTokens.out");
+  ASSERT_TRUE(tokens.isOpen());
+  ASSERT_EQ(expected, tokens.getLine());
+  
+}
+TEST(Parser, atomTest){
+  ASTNode *tree = new ASTNode();
+  string inpath = "tests/inputs/2.lisp";
+  ifstream testIn(inpath);
+  ASSERT_TRUE(testIn.is_open());
+  Tokens tokens(inpath, "tests/outputs/testTokens.out");
+  ASSERT_TRUE(tokens.isOpen());
+  ASSERT_TRUE(atom(tokens, tree));
+}
+TEST(Parser, listTest){
+  ASTNode *tree = new ASTNode();
+  string inpath = "tests/inputs/1.lisp";
+  ifstream testIn(inpath);
+  ASSERT_TRUE(testIn.is_open());
+  Tokens tokens(inpath, "tests/outputs/testTokents.out");
+  ASSERT_TRUE(tokens.isOpen());
+  ASSERT_TRUE(list(tokens,tree));
+  
+}
 //Tests for Tokens class

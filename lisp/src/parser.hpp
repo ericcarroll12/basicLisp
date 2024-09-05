@@ -41,7 +41,6 @@ bool atom(Tokens &tokens,ASTNode *tree) {
   /*
     checks to see if tokens object has encountered an atom.
   */
-    cout << "Atom " << tokens.getLine() << endl;
     Token t = tokens.peekNext();
     if (t.getType() == INTEGER || t.getType()==REAL){
         *tree = ASTNode(tokens.getNext());
@@ -60,31 +59,27 @@ bool list(Tokens &tokens,ASTNode *tree) {
 /*
   checks to see if the tokens object has encountered a list. A list is valid if it has ( expression )
 */
-    cout << "List " << tokens.getLine() << endl;
     Token t=tokens.peekNext();
 
     if (t.getType()==OPENPAREN){
       tokens.getNext();
       t=tokens.peekNext();
       bool running = true;
-      bool first = true;
       while (running){
-        ASTNode *subtree = new ASTNode;  
+        ASTNode *subtree = new ASTNode();  
         bool express=expression(tokens,subtree);      
-        if(!express) return false;
-        if(express && first){ 
-          *tree=*subtree;
-        }else if(express && !first){
+        if (express){
           tree->add(subtree);
-        }
-        first=false;        
-        t=tokens.peekNext();
-        if (t.getType()==CLOSEPAREN){
-          tokens.getNext();
-          return true;
-        }
+          t=tokens.peekNext();
+          if (t.getType()==CLOSEPAREN){
+            tokens.getNext();
+            return true;
+          }
+        } else return error("not an expression");
+
       }
-    }else return false;
+    }
+    return false;
   }
     /*
     bool done = false;
@@ -135,20 +130,28 @@ bool expression(Tokens &tokens,ASTNode *tree) {
     Function to determine if the tokens object has encountered an expression. 
     In lisp an expression is valid if it is an atom or a list.
   */
-  cout << "Expression " << tokens.getLine() << endl;
-  if (atom(tokens, tree)) return true;
-  else if(list(tokens,tree)) return true;
+  ASTNode *subtree = new ASTNode;
+  if (atom(tokens,subtree)){
+    *tree=*subtree;
+    return true;
+  }
+  else if(list(tokens,tree)){
+    tree->add(subtree);
+    return true;
+  } 
   return false;
 }
 
 bool program(Tokens &tokens, ASTNode *tree){
-  /*
-    Function to check if the source is a valid lisp program. If it is an expression it passes.
- 
-  bool ex = true;
-  do{   
-    ex = expression(tokens, tree);
-  }while(ex);
-  return true; */
-  return expression(tokens,tree);
+  bool running=true;
+  while (running){
+    if (tokens.done()) return true;
+    ASTNode *subtree=new ASTNode();
+    bool exp=expression(tokens,subtree);
+    if (exp){
+      tree->add(subtree);
+    }
+  }
+  return error("program error");
+
 }

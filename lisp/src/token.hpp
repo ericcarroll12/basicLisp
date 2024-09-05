@@ -6,9 +6,17 @@
 
 using namespace std;
 
+/*
+  Types of tokens
+*/
 enum TokenType {OPENPAREN,CLOSEPAREN,MULTIPLYING,ADDING,EOL,DONE,
                 RELATIONAL,INTEGER,REAL,SYMBOL,
                 MINUS,ERROR};
+                
+/*
+  Token class
+  
+*/
 class Token {
   TokenType type;
   string value;

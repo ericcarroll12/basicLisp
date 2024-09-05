@@ -37,6 +37,7 @@ class Tokens:public Tokenizer{
     advance();
   }
 
+  bool isOpen() { return fin.is_open(); }
   //functions
   string getLine() { return line; }
 
