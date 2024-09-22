@@ -32,8 +32,13 @@ class Tokens:public Tokenizer{
     success=true;
     line="";
     filename=iFilename;
+
     fin.open(iFilename);
     fout.open(oFilename);
+    if (!fin.is_open() || !fout.is_open()){
+      cout << "could not open file" << endl;
+      return;
+    } 
     advance();
   }
 

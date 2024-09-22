@@ -68,15 +68,16 @@ bool list(Tokens &tokens,ASTNode *tree) {
       while (running){
         ASTNode *subtree = new ASTNode();  
         bool express=expression(tokens,subtree);      
-        if (express){
-          tree->add(subtree);
-          t=tokens.peekNext();
-          if (t.getType()==CLOSEPAREN){
-            tokens.getNext();
-            return true;
-          }
-        } else return error("not an expression");
-
+        if (!express)return error(" not an expression");   
+        if (subtree->getToken().getType()==ADDING){
+          *tree = *subtree;
+        } else tree->add(subtree);
+        
+        t=tokens.peekNext();
+        if (t.getType()==CLOSEPAREN){
+          tokens.getNext(); 
+          return true;
+        }
       }
     }
     return false;
@@ -131,12 +132,10 @@ bool expression(Tokens &tokens,ASTNode *tree) {
     In lisp an expression is valid if it is an atom or a list.
   */
   ASTNode *subtree = new ASTNode;
-  if (atom(tokens,subtree)){
-    *tree=*subtree;
+  if (atom(tokens,tree)){
     return true;
   }
   else if(list(tokens,tree)){
-    tree->add(subtree);
     return true;
   } 
   return false;
@@ -149,8 +148,8 @@ bool program(Tokens &tokens, ASTNode *tree){
     ASTNode *subtree=new ASTNode();
     bool exp=expression(tokens,subtree);
     if (exp){
-      tree->add(subtree);
-    }
+      *tree = *subtree;
+    }else return error("not an expression");
   }
   return error("program error");
 

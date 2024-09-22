@@ -22,7 +22,7 @@ string uniqueLabel() {
 }
 
 void compile(ASTNode *root,string &assembly) {
-  /*Recursive compilation function. Takes an abstract syntax tree, uses right hand recursion to compile function to assembly
+  /*Recursive compilation function. Takes an abstract syntax tree. Compiles function to text assembly
    */
   switch(root->getToken().getType()) {
     case RELATIONAL:
@@ -349,6 +349,7 @@ int main(int argc,char **argv) {
     cout << "<output.s> is the name of the assembly code source"<<endl;
   } else if (argc==3){
     Tokens tokens(argv[1],argv[2]);
+    if (!tokens.isOpen()) return 1;
     cout << "Line = " << tokens.getLine() << endl;
     ASTNode *root=new ASTNode();
     cout << "Before Parsing " << endl;

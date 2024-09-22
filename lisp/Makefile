@@ -7,7 +7,7 @@ ${EXE}:${SRC} ${HEADERS}
 	g++ -g ${SRC} -o $@
 	
 run:${EXE}
-	./${EXE} tests/input.l tests/output.s
+	./${EXE} tests/inputs/5.lisp tests/outputs/output.s
 
 interpreter:${EXE}
 	./${EXE}
@@ -17,7 +17,7 @@ test:${TEST}
 	./bin/test
 
 debug:${EXE}
-	gdb --args ${EXE} input.l sort.s
+	gdb --args ${EXE} tests/inputs/5.l tests/output/sort.s
 
 clean:
 	rm tests/*.txt ${EXE}
